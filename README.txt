@@ -1,23 +1,22 @@
-ABCU Course Planner
+CS300 Portfolio
 
-This project helps an academic adviser find courses and their prerequisites. It also
-prints the full course list in alphanumeric order. The catalog includes computer science
-courses and MATH201.
+This portfolio contains my final projects for CS300, Data Structures and Algorithms.
+Project One covers the design and runtime analysis, and Project Two is the C++
+course planner. The program reads a list of courses from a file, puts them in
+order, and shows which courses are required before taking another one.
 
-My work across the course
+Coursework
 
-My CS300 coursework includes linked lists, hash tables, and binary search trees for
-storing and finding auction bids. Those assignments cover adding records, searching
-for a bid, removing it, and reading data from CSV files. The hash-table assignment
-uses linked lists to handle collisions, while the tree assignment includes traversal
-and removal.
+My coursework includes assignments on linked lists, hash tables, and binary search
+trees. Those programs use auction bids, with options to add, find, and remove a
+bid. Although they work with the same type of information, each structure stores
+it differently. The hash table uses linked lists when multiple bids belong in the
+same bucket, while the binary search tree places bids according to their keys.
 
-The course-planner milestones compare a vector, a hash table, and a binary search
-tree before bringing those designs into Project One. The final analysis considers
-runtime, memory use, and the tradeoffs for an eight-course catalog. Project Two
-puts the vector design into a working C++ program. It loads courses, prints them
-in order, and finds a course with its prerequisites. The files here contain the
-final projects and analysis.
+The project milestones cover a vector, a hash table, and a binary search tree for
+the course planner. Project One brings those designs together and compares their
+runtime and memory use. Project Two uses the vector design with the supplied
+eight-course file. The files in this repository are the final projects and analysis.
 
 Files
 
@@ -48,46 +47,54 @@ catalog. A successful reload replaces it.
 
 What problem did the projects solve?
 
-The adviser needs two views of the same data: the complete course list, and the details
-for one course. Project One compares a vector, a hash table, and a binary search tree
-for those two jobs. Project Two builds the vector design. Look up CSCI400, for example,
-and it returns the course title along with the numbers and titles of its prerequisites,
-CSCI301 and CSCI350.
+The projects were about organizing course information so someone could see the
+available classes and what they needed to take first. The program needed to print
+the full list in alphanumeric order and let someone search for a single course.
+For example, searching for CSCI400 shows its title and the two prerequisites,
+CSCI301 and CSCI350. Project One covers the design for those functions, while
+Project Two puts that design into a working program.
 
 How did I approach the problem?
 
-I started with what the adviser actually needs to do. A fast search is useful, but the
-program also has to load the records, check them, and put them in order. For eight
-courses, a vector keeps storage simple. Comparing the three structures helped me connect
-the choice to the amount of data and the work the program has to do.
+My analysis compares the three structures based on the work the program has to
+do, including loading the file, finding a course, and printing the list in order.
+A hash table can make searching faster on average, but the program still needs
+to sort the courses before printing them. The vector keeps the design simple
+for a file with eight courses, which is why it is the recommendation in Project
+One. Understanding the structures matters because a choice that works well for
+one operation may add work somewhere else in the same program.
 
 How did the project address roadblocks?
 
-The real CSV has empty trailing fields, and some prerequisites show up later in the file
-than the courses that list them. A loader that rejected every empty field would throw
-out valid records. Checking references during the first pass would have the same problem
-with valid course relationships. So the loader ignores empty prerequisite fields and
-waits until it has read the whole file before it checks references.
+One issue with the course file is that some rows have empty prerequisite fields
+at the end. Rejecting those rows would mean
+rejecting valid courses. Another issue is that a prerequisite can appear further
+down in the file, so checking for it too early would make it look like it was
+missing. The program handles both by ignoring empty prerequisite fields and
+checking the course references after the whole file has been read.
 
-The sample output was another issue. It lists CSCI301 before CSCI300, even though the
-written requirement asks for alphanumeric order. The program follows the written
-requirement. The tests compare all eight course records with the source data and check
-that a failed reload keeps the previous catalog.
+There is also a difference between the sample output and the written instructions.
+The sample puts CSCI301 before CSCI300, but the instructions call for alphanumeric
+order. The program follows the written instructions and places CSCI300 first.
 
 How does this work affect my approach to software design?
 
-The runtime analysis gives me a reason to look at the complete operation before picking
-a structure. A vector append is cheap, but the duplicate check still scans the earlier
-courses, and that makes the full load quadratic under the stated assumptions. On future
-projects, I'd compare the validation and output requirements right alongside insertion
-and lookup costs.
+The runtime analysis shows why the rest of the program needs to be considered
+along with the data structure. Adding a course to the vector is only part of the
+loading process, since the program also searches the courses already loaded to
+check for a duplicate. Those repeated checks add more work as the file gets
+larger. The vector is reasonable for this small catalog, but a larger project
+would need another comparison based on how much information it stores and how
+often it searches or sorts that information.
 
 How does it support maintainable, readable, adaptable programs?
 
-The program keeps parsing, loading, lookup, printing, and menu handling separate. That
-makes each function easier to check, and it gives input changes an obvious place to go.
-The loader builds a temporary catalog before it replaces the current one. I'd reuse that
-pattern anywhere a partial update could leave a program with unusable data.
+The course planner has separate functions for reading the file, loading the
+courses, searching, printing, and handling the menu. That makes it easier to
+follow what each part does and to change one part without rewriting the others.
+If the file format changes, the parsing function is the place to start. The
+program also checks a new set of courses before replacing the current set, so
+a bad file does not erase information that was already loaded.
 
 Validation and limits
 
