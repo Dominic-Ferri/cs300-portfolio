@@ -4,6 +4,21 @@ This project helps an academic adviser find courses and their prerequisites. It 
 prints the full course list in alphanumeric order. The catalog includes computer science
 courses and MATH201.
 
+My work across the course
+
+My CS300 coursework includes linked lists, hash tables, and binary search trees for
+storing and finding auction bids. Those assignments cover adding records, searching
+for a bid, removing it, and reading data from CSV files. The hash-table assignment
+uses linked lists to handle collisions, while the tree assignment includes traversal
+and removal.
+
+The course-planner milestones compare a vector, a hash table, and a binary search
+tree before bringing those designs into Project One. The final analysis considers
+runtime, memory use, and the tradeoffs for an eight-course catalog. Project Two
+puts the vector design into a working C++ program. It loads courses, prints them
+in order, and finds a course with its prerequisites. The files here contain the
+final projects and analysis.
+
 Files
 
 - ProjectTwo.cpp: the complete C++ program.
