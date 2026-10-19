@@ -1,22 +1,23 @@
 CS300 Portfolio
 
 This portfolio contains my final projects for CS300, Data Structures and Algorithms.
-Project One covers the design and runtime analysis, and Project Two is the C++
-course planner. The program reads a list of courses from a file, puts them in
-order, and shows which courses are required before taking another one.
+Project One compares three ways to store course information, including their
+runtime and memory use. Project Two uses that analysis in a C++ course planner.
+The program reads courses from a file, prints them in order, and shows the
+prerequisites for each course.
 
 Coursework
 
-My coursework includes assignments on linked lists, hash tables, and binary search
-trees. Those programs use auction bids, with options to add, find, and remove a
-bid. Although they work with the same type of information, each structure stores
-it differently. The hash table uses linked lists when multiple bids belong in the
-same bucket, while the binary search tree places bids according to their keys.
+My coursework includes linked lists, hash tables, and binary search trees. The
+assignments use auction bids, with options to add, find, and remove a bid. Each
+structure handles that information differently. The hash table groups bids into
+buckets and uses a linked list when bids share a bucket. The binary search tree
+places bids according to their keys, which determine their position in the tree.
 
-The project milestones cover a vector, a hash table, and a binary search tree for
-the course planner. Project One brings those designs together and compares their
-runtime and memory use. Project Two uses the vector design with the supplied
-eight-course file. The files in this repository are the final projects and analysis.
+The course-planner milestones compare a vector, a hash table, and a binary search
+tree. Those designs become part of Project One, which recommends a vector for
+the supplied eight-course catalog. Project Two implements that design. This
+repository contains the final projects and analysis.
 
 Files
 
@@ -38,40 +39,42 @@ Choose option 1. At the filename prompt, enter:
 
 data/CS 300 ABCU_Advising_Program_Input.csv
 
-The menu also offers option 2 to print all courses, option 3 to find a course, and
-option 9 to exit. Course lookup accepts lowercase input, such as csci400.
+The remaining menu options are:
 
-The program reads the supplied unquoted CSV format. It ignores empty prerequisite fields
-and checks that every listed prerequisite exists. A failed load keeps the previous
-catalog. A successful reload replaces it.
+- 2: Print all courses.
+- 3: Find a course.
+- 9: Exit.
+
+Course lookup accepts lowercase input, such as csci400.
+
+The program reads the supplied unquoted CSV format. It ignores empty prerequisite
+fields and checks that every listed prerequisite exists in the catalog. A failed
+load keeps the previous catalog. A successful reload replaces it.
 
 What problem did the projects solve?
 
-The projects were about organizing course information so someone could see the
-available classes and what they needed to take first. The program needed to print
-the full list in alphanumeric order and let someone search for a single course.
-For example, searching for CSCI400 shows its title and the two prerequisites,
-CSCI301 and CSCI350. Project One covers the design for those functions, while
-Project Two puts that design into a working program.
+Both projects organize course information so someone can find a class and see
+what they need to take first. The program prints the full list in alphanumeric
+order and lets the user search for one course. For example, searching for
+CSCI400 shows its title and the prerequisites, CSCI301 and CSCI350. Project One
+compares designs for those tasks, while Project Two implements the vector design.
 
 How did I approach the problem?
 
-My analysis compares the three structures based on the work the program has to
-do, including loading the file, finding a course, and printing the list in order.
-A hash table can make searching faster on average, but the program still needs
-to sort the courses before printing them. The vector keeps the design simple
-for a file with eight courses, which is why it is the recommendation in Project
-One. Understanding the structures matters because a choice that works well for
-one operation may add work somewhere else in the same program.
+My analysis compares how each structure loads the file, finds a course, and
+prints the list in order. A hash table can find courses faster on average, but
+it still needs a separate sorting step to print them in order. For eight courses,
+the vector keeps storage simple and avoids the extra buckets or tree nodes.
+That is why Project One recommends it. Comparing the structures matters because
+the choice affects both the search and the work needed to produce the output.
 
 How did the project address roadblocks?
 
-One issue with the course file is that some rows have empty prerequisite fields
-at the end. Rejecting those rows would mean
-rejecting valid courses. Another issue is that a prerequisite can appear further
-down in the file, so checking for it too early would make it look like it was
-missing. The program handles both by ignoring empty prerequisite fields and
-checking the course references after the whole file has been read.
+The course file contains blank prerequisite fields, and rejecting every blank
+would exclude valid courses. Some prerequisites also appear later in the file
+than the courses that require them. Checking those references too early would
+make a valid prerequisite look missing. The loader handles both cases by ignoring
+blank prerequisite fields and checking the references after it reads the whole file.
 
 There is also a difference between the sample output and the written instructions.
 The sample puts CSCI301 before CSCI300, but the instructions call for alphanumeric
@@ -79,22 +82,22 @@ order. The program follows the written instructions and places CSCI300 first.
 
 How does this work affect my approach to software design?
 
-The runtime analysis shows why the rest of the program needs to be considered
-along with the data structure. Adding a course to the vector is only part of the
-loading process, since the program also searches the courses already loaded to
-check for a duplicate. Those repeated checks add more work as the file gets
-larger. The vector is reasonable for this small catalog, but a larger project
-would need another comparison based on how much information it stores and how
-often it searches or sorts that information.
+The runtime analysis covers the whole loading process. Before adding a course,
+the program searches the existing records to check for a duplicate. Those repeated
+searches add work as the file grows, even though adding the record itself is
+straightforward. The design therefore needs to account for the checks as well
+as the storage. A vector is reasonable for this small catalog. A larger program
+would need another comparison based on its size and how often it searches or
+sorts the data.
 
 How does it support maintainable, readable, adaptable programs?
 
-The course planner has separate functions for reading the file, loading the
-courses, searching, printing, and handling the menu. That makes it easier to
-follow what each part does and to change one part without rewriting the others.
-If the file format changes, the parsing function is the place to start. The
-program also checks a new set of courses before replacing the current set, so
-a bad file does not erase information that was already loaded.
+The course planner separates parsing, loading, searching, printing, and menu
+handling into functions. Each function has a specific job, which makes the code
+easier to follow and gives changes a clear starting point. For example, a change
+to the file format starts with the parsing function. The loader also checks a
+temporary set of courses before replacing the current set. If the new file fails
+those checks, the program keeps the courses it already loaded.
 
 Validation and limits
 
